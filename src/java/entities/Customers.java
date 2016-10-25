@@ -58,8 +58,8 @@ public class Customers implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "cu_birthdate")
-    @Temporal(TemporalType.DATE)
-    private Date cuBirthdate;
+    //@Temporal(TemporalType.DATE)
+    private String cuBirthdate;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -78,7 +78,7 @@ public class Customers implements Serializable {
         this.cuId = cuId;
     }
 
-    public Customers(Integer cuId, String cuFirstname, String cuLastname, Date cuBirthdate, String cuAddress, String cuPersonnummer) {
+    public Customers(Integer cuId, String cuFirstname, String cuLastname, String cuBirthdate, String cuAddress, String cuPersonnummer) {
         this.cuId = cuId;
         this.cuFirstname = cuFirstname;
         this.cuLastname = cuLastname;
@@ -111,11 +111,11 @@ public class Customers implements Serializable {
         this.cuLastname = cuLastname;
     }
 
-    public Date getCuBirthdate() {
+    public String getCuBirthdate() {
         return cuBirthdate;
     }
 
-    public void setCuBirthdate(Date cuBirthdate) {
+    public void setCuBirthdate(String cuBirthdate) {
         this.cuBirthdate = cuBirthdate;
     }
 
