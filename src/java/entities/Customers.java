@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Customers.findByCuPersonnummer", query = "SELECT c FROM Customers c WHERE c.cuPersonnummer = :cuPersonnummer")})
 public class Customers implements Serializable {
 
+    //test comment
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
