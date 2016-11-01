@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -57,14 +58,14 @@ public class CustomersFacadeREST extends AbstractFacade<Customers> {
 
     @GET
     @Path("{id}")
-    @Produces({ MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Customers find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
-    @Produces({ MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Customers> findAll() {
         return super.findAll();
     }
@@ -74,6 +75,52 @@ public class CustomersFacadeREST extends AbstractFacade<Customers> {
     @Produces({MediaType.APPLICATION_JSON})
     public List<Customers> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
+    }
+
+    @GET
+    @Path("/firstname/{firstname}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Customers> findCusFirstName(@PathParam("firstname") String firstname) {
+        Query query = em.createNamedQuery("Customers.findByCuFirstname").setParameter("cuFirstname", firstname);
+        return query.getResultList();
+    }
+    
+    @GET
+    @Path("/lastname/{lastname}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Customers> findCusLastName(@PathParam("lastname") String lastname) {
+        Query query = em.createNamedQuery("Customers.findByCuLastname").setParameter("cuLastname", lastname);
+        return query.getResultList();
+    }
+    
+    @GET
+    @Path("/birthdate/{birthdate}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Customers> findCusBirthdate(@PathParam("birthdate") String birthdate) {
+        Query query = em.createNamedQuery("Customers.findByCuBirthdate").setParameter("cuBirthdate", birthdate);
+        return query.getResultList();
+    }
+    @GET
+    @Path("/address/{address}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Customers> findCusAddress(@PathParam("address") String address) {
+        Query query = em.createNamedQuery("Customers.findByCuAddress").setParameter("cuAddress", address);
+        return query.getResultList();
+    }
+    @GET
+    @Path("/personnummer/{personnummer}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Customers> findCusPersonNummer(@PathParam("personnummer") String personnummer) {
+        Query query = em.createNamedQuery("Customers.findByCuPersonnummer").setParameter("cuPersonnummer", personnummer);
+        return query.getResultList();
+    }
+    
+    @GET
+    @Path("/searchfname/{fname}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Customers> searchForFirstName(@PathParam("fname") String fname) {
+        Query query = em.createNamedQuery("Customers.searchForFirstName").setParameter("cuFirstname", "%"+fname+"%");
+        return query.getResultList();
     }
 
     @GET
@@ -87,5 +134,5 @@ public class CustomersFacadeREST extends AbstractFacade<Customers> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
