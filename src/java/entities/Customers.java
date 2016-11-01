@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Customers.findByCuBirthdate", query = "SELECT c FROM Customers c WHERE c.cuBirthdate = :cuBirthdate")
     , @NamedQuery(name = "Customers.findByCuAddress", query = "SELECT c FROM Customers c WHERE c.cuAddress = :cuAddress")
     , @NamedQuery(name = "Customers.findByCuPersonnummer", query = "SELECT c FROM Customers c WHERE c.cuPersonnummer = :cuPersonnummer")
-    , @NamedQuery(name = "Customers.searchForFirstName", query = "SELECT c FROM Customers c WHERE c.cuFirstname LIKE :cuFirstname")})
+    , @NamedQuery(name = "Customers.searchForFirstName", query = "SELECT c FROM Customers c WHERE c.cuFirstname LIKE :cuFirstname ORDER BY c.cuFirstname")})
 public class Customers implements Serializable {
 
     //test comment
