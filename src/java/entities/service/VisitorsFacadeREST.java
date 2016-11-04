@@ -5,11 +5,13 @@
  */
 package entities.service;
 
+import entities.Customers;
 import entities.Visitors;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -37,14 +39,14 @@ public class VisitorsFacadeREST extends AbstractFacade<Visitors> {
 
     @POST
     @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void create(Visitors entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Integer id, Visitors entity) {
         super.edit(entity);
     }
@@ -57,21 +59,30 @@ public class VisitorsFacadeREST extends AbstractFacade<Visitors> {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Visitors find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Visitors> findAll() {
         return super.findAll();
     }
 
+    //NEW STUFF
+    @GET
+    @Path("/visitorSearchfname/{fname}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Customers> searchForFirstName(@PathParam("fname") String fname) {
+        Query query = em.createNamedQuery("Visitors.searchForFirstName").setParameter("visFirstname", "%" + fname + "%");
+        return query.getResultList();
+    }
+
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Visitors> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
@@ -87,5 +98,5 @@ public class VisitorsFacadeREST extends AbstractFacade<Visitors> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
