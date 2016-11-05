@@ -68,7 +68,21 @@ public class RemindersFacadeREST extends AbstractFacade<Reminders> {
     public List<Reminders> findAll() {
         return super.findAll();
     }
-
+    
+    @GET
+    @Path("/data/{data}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List <Reminders> findByRemData(@PathParam("data") Date data) {
+        Query query = em.createNamedQuery("Reminders.findByRemData").setParameter("remData", data);
+        return query.getResultList();
+    }
+    @GET
+    @Path("/time/{time}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List <Reminders> findByRemTime(@PathParam("time") Date time) {
+        Query query = em.createNamedQuery("Reminders.findByRemTime").setParameter("remTime", time);
+        return query.getResultList();
+    }
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
