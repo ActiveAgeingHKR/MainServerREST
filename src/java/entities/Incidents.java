@@ -47,7 +47,8 @@ public class Incidents implements Serializable {
     @NotNull
     @Column(name = "in_time")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date inTime;
+    //private Date inTime;
+    private String inTime;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 7)
@@ -64,7 +65,12 @@ public class Incidents implements Serializable {
         this.inId = inId;
     }
 
-    public Incidents(Integer inId, Date inTime, String inSeverity) {
+//    public Incidents(Integer inId, Date inTime, String inSeverity) {
+//        this.inId = inId;
+//        this.inTime = inTime;
+//        this.inSeverity = inSeverity;
+//    }
+    public Incidents(Integer inId, String inTime, String inSeverity) {
         this.inId = inId;
         this.inTime = inTime;
         this.inSeverity = inSeverity;
@@ -78,11 +84,17 @@ public class Incidents implements Serializable {
         this.inId = inId;
     }
 
-    public Date getInTime() {
+//    public Date getInTime() {
+//        return inTime;
+//    }
+    public String getInTime() {
         return inTime;
     }
 
-    public void setInTime(Date inTime) {
+//    public void setInTime(Date inTime) {
+//        this.inTime = inTime;
+//    }
+     public void setInTime(String inTime) {
         this.inTime = inTime;
     }
 
