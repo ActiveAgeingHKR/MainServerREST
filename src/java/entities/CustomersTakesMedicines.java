@@ -31,11 +31,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CustomersTakesMedicines.findAll", query = "SELECT c FROM CustomersTakesMedicines c")
-    , @NamedQuery(name = "CustomersTakesMedicines.findByCustomersId", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.customersTakesMedicinesPK.customersId = :customersId")
-    , @NamedQuery(name = "CustomersTakesMedicines.findByMedicinsId", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.customersTakesMedicinesPK.medicinsId = :medicinsId")
+    , @NamedQuery(name = "CustomersTakesMedicines.findByCuId", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.customersTakesMedicinesPK.customersId = :customersId")
+    , @NamedQuery(name = "CustomersTakesMedicines.findByMedId", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.customersTakesMedicinesPK.medicinsId = :medicinsId")
     , @NamedQuery(name = "CustomersTakesMedicines.findByMedDosage", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.medDosage = :medDosage")
     , @NamedQuery(name = "CustomersTakesMedicines.findByMedStartDate", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.medStartDate = :medStartDate")
-    , @NamedQuery(name = "CustomersTakesMedicines.findByMedicationintakeschedule", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.medicationintakeschedule = :medicationintakeschedule")})
+    , @NamedQuery(name = "CustomersTakesMedicines.findByMedIntakeSched", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.medInterval= :medInterval")})
 public class CustomersTakesMedicines implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,8 +53,8 @@ public class CustomersTakesMedicines implements Serializable {
     private Date medStartDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Medication intake schedule")
-    private double medicationintakeschedule;
+    @Column(name = "med_interval")
+    private double medInterval;
     @JoinColumn(name = "medicins_id", referencedColumnName = "med_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Medicines medicines;
@@ -70,7 +70,7 @@ public class CustomersTakesMedicines implements Serializable {
         this.customersTakesMedicinesPK = customersTakesMedicinesPK;
         this.medDosage = medDosage;
         this.medStartDate = medStartDate;
-        this.medicationintakeschedule = medicationintakeschedule;
+        this.medInterval = medicationintakeschedule;
     }
 
     public CustomersTakesMedicines(int customersId, int medicinsId) {
@@ -102,11 +102,11 @@ public class CustomersTakesMedicines implements Serializable {
     }
 
     public double getMedicationintakeschedule() {
-        return medicationintakeschedule;
+        return medInterval;
     }
 
-    public void setMedicationintakeschedule(double medicationintakeschedule) {
-        this.medicationintakeschedule = medicationintakeschedule;
+    public void setMedicationintakeschedule(double medInterval) {
+        this.medInterval = medInterval;
     }
 
     public Medicines getMedicines() {

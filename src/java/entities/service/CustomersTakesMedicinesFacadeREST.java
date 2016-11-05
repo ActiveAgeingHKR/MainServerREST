@@ -5,12 +5,15 @@
  */
 package entities.service;
 
+import entities.Customers;
 import entities.CustomersTakesMedicines;
 import entities.CustomersTakesMedicinesPK;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -100,7 +103,31 @@ public class CustomersTakesMedicinesFacadeREST extends AbstractFacade<CustomersT
     public List<CustomersTakesMedicines> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
-
+    
+    @GET
+    @Path("/meddosage/{meddosage}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<CustomersTakesMedicines> findMedDosage(@PathParam("meddosage") String meddosage) {
+        Query query = em.createNamedQuery("CustomersTakesMedicines.findByMedDosage").setParameter("medDosage", meddosage);
+        return query.getResultList();
+    }
+    
+    @GET
+    @Path("/medstartdate/{medstartdate}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<CustomersTakesMedicines> findMedStartDate(@PathParam("medstartdate") Date medstartdate) {
+        Query query = em.createNamedQuery("CustomersTakesMedicines.findByMedStartDate").setParameter("medStartDate", medstartdate);
+        return query.getResultList();
+    }
+    
+    @GET
+    @Path("/medintakesched/{medintakesched}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<CustomersTakesMedicines> findMedIntakeSched(@PathParam("medintakesched") double medintakesched) {
+        Query query = em.createNamedQuery("CustomersTakesMedicines.findByMedIntakeSched").setParameter("medInterval", medintakesched);
+        return query.getResultList();
+    }
+    
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)

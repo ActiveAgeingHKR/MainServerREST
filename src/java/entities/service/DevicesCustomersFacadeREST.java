@@ -6,10 +6,12 @@
 package entities.service;
 
 import entities.DevicesCustomers;
+import entities.Medicines;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -74,6 +76,14 @@ public class DevicesCustomersFacadeREST extends AbstractFacade<DevicesCustomers>
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<DevicesCustomers> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
+    }
+    
+    @GET
+    @Path("/devname/{devname}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Medicines> findDevName(@PathParam("devname") String devname) {
+        Query query = em.createNamedQuery("DevicesCustomers.findByDevName").setParameter("devName", devname);
+        return query.getResultList();
     }
 
     @GET

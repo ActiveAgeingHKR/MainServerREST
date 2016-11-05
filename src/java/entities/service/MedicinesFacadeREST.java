@@ -5,11 +5,13 @@
  */
 package entities.service;
 
+import entities.CustomersTakesMedicines;
 import entities.Medicines;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -74,6 +76,30 @@ public class MedicinesFacadeREST extends AbstractFacade<Medicines> {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Medicines> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
+    }
+    
+    @GET
+    @Path("/medname/{medname}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Medicines> findMedName(@PathParam("medname") String medname) {
+        Query query = em.createNamedQuery("Medicines.findByMedName").setParameter("medName", medname);
+        return query.getResultList();
+    }
+    
+    @GET
+    @Path("/volume/{volume}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Medicines> findVolume(@PathParam("volume") int volume) {
+        Query query = em.createNamedQuery("Medicines.findByVolume").setParameter("volume", volume);
+        return query.getResultList();
+    }
+    
+    @GET
+    @Path("/medunit/{medunit}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Medicines> findMeasurementUnit(@PathParam("medunit") int medunit) {
+        Query query = em.createNamedQuery("Medicines.findByMedMeasurementUnit").setParameter("medMeasurementUnit", medunit);
+        return query.getResultList();
     }
 
     @GET
