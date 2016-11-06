@@ -6,10 +6,12 @@
 package entities.service;
 
 import entities.Tasks;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -68,7 +70,36 @@ public class TasksFacadeREST extends AbstractFacade<Tasks> {
     public List<Tasks> findAll() {
         return super.findAll();
     }
-
+//findByTaskTitle findByTaskContent findByTaskdueDate findByTaskCompl
+     @GET
+    @Path("/title/{title}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List <Tasks> findByTaskTitle(@PathParam("title") String title) {
+        Query query = em.createNamedQuery("Tasks.findByTaskTitle").setParameter("taskTitle", title);
+        return query.getResultList();
+    }
+       @GET
+    @Path("/conten/{conten}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List <Tasks> findByTaskContent(@PathParam("conten") String conten) {
+        Query query = em.createNamedQuery("Tasks.findByTaskContent").setParameter("taskContent", conten);
+        return query.getResultList();
+    }
+         @GET
+    @Path("/dueDate/{dueDate}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List <Tasks> findByTaskdueDate(@PathParam("dueDate") Date dueDate) {
+        Query query = em.createNamedQuery("Tasks.findByTaskdueDate").setParameter("taskdueDate", dueDate);
+        return query.getResultList();
+    }
+    @GET
+    @Path("/compl/{compl}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List <Tasks> findByTaskCompl(@PathParam("compl") boolean compl) {
+        Query query = em.createNamedQuery("Tasks.findByTaskCompl").setParameter("taskCompl", compl);
+        return query.getResultList();
+    }
+    
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -89,3 +120,4 @@ public class TasksFacadeREST extends AbstractFacade<Tasks> {
     }
     
 }
+

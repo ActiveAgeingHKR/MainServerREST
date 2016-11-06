@@ -6,10 +6,12 @@
 package entities.service;
 
 import entities.Reminders;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -68,7 +70,21 @@ public class RemindersFacadeREST extends AbstractFacade<Reminders> {
     public List<Reminders> findAll() {
         return super.findAll();
     }
-
+    
+    @GET
+    @Path("/data/{data}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List <Reminders> findByRemData(@PathParam("data") Date data) {
+        Query query = em.createNamedQuery("Reminders.findByRemData").setParameter("remData", data);
+        return query.getResultList();
+    }
+    @GET
+    @Path("/time/{time}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List <Reminders> findByRemTime(@PathParam("time") Date time) {
+        Query query = em.createNamedQuery("Reminders.findByRemTime").setParameter("remTime", time);
+        return query.getResultList();
+    }
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
