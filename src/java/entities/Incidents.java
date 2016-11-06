@@ -56,6 +56,7 @@ public class Incidents implements Serializable {
     @Size(max = 165)
     @Column(name = "in_notes")
     private String inNotes;
+    private Customers custID;
 
     public Incidents() {
     }
@@ -64,10 +65,11 @@ public class Incidents implements Serializable {
         this.inId = inId;
     }
 
-    public Incidents(Integer inId, Date inTime, String inSeverity) {
+    public Incidents(Integer inId, Date inTime, String inSeverity, Customers customer) {
         this.inId = inId;
         this.inTime = inTime;
         this.inSeverity = inSeverity;
+        this.custID = customer;
     }
     
 
@@ -128,6 +130,20 @@ public class Incidents implements Serializable {
     @Override
     public String toString() {
         return "entities.Incidents[ inId=" + inId + " ]";
+    }
+
+    /**
+     * @return the custID
+     */
+    public Customers getCustID() {
+        return custID;
+    }
+
+    /**
+     * @param custID the custID to set
+     */
+    public void setCustID(Customers custID) {
+        this.custID = custID;
     }
     
 }
