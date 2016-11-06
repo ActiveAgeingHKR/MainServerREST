@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -46,8 +48,8 @@ public class Incidents implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "in_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date inTime;
+    //@Temporal(TemporalType.TIMESTAMP)
+    private String inTime;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 7)
@@ -56,7 +58,9 @@ public class Incidents implements Serializable {
     @Size(max = 165)
     @Column(name = "in_notes")
     private String inNotes;
-    private Customers custID;
+    @JoinColumn(name = "customers_cu_id", referencedColumnName = "cu_id")
+    @ManyToOne(optional = false)
+    private Customers customersCuId;
 
     public Incidents() {
     }
@@ -65,13 +69,11 @@ public class Incidents implements Serializable {
         this.inId = inId;
     }
 
-    public Incidents(Integer inId, Date inTime, String inSeverity, Customers customer) {
+    public Incidents(Integer inId, String inTime, String inSeverity) {
         this.inId = inId;
         this.inTime = inTime;
         this.inSeverity = inSeverity;
-        this.custID = customer;
     }
-    
 
     public Integer getInId() {
         return inId;
@@ -81,15 +83,13 @@ public class Incidents implements Serializable {
         this.inId = inId;
     }
 
-    public Date getInTime() {
+    public String getInTime() {
         return inTime;
     }
-    
 
-    public void setInTime(Date inTime) {
+    public void setInTime(String inTime) {
         this.inTime = inTime;
     }
-     
 
     public String getInSeverity() {
         return inSeverity;
@@ -105,6 +105,14 @@ public class Incidents implements Serializable {
 
     public void setInNotes(String inNotes) {
         this.inNotes = inNotes;
+    }
+
+    public Customers getCustomersCuId() {
+        return customersCuId;
+    }
+
+    public void setCustomersCuId(Customers customersCuId) {
+        this.customersCuId = customersCuId;
     }
 
     @Override
@@ -130,20 +138,6 @@ public class Incidents implements Serializable {
     @Override
     public String toString() {
         return "entities.Incidents[ inId=" + inId + " ]";
-    }
-
-    /**
-     * @return the custID
-     */
-    public Customers getCustID() {
-        return custID;
-    }
-
-    /**
-     * @param custID the custID to set
-     */
-    public void setCustID(Customers custID) {
-        this.custID = custID;
     }
     
 }
