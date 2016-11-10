@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -60,6 +61,14 @@ public class EmployeeScheduleFacadeREST extends AbstractFacade<EmployeeSchedule>
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public EmployeeSchedule find(@PathParam("id") Integer id) {
         return super.find(id);
+    }
+    
+    @GET
+    @Path("date/{date}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<EmployeeSchedule> findByDate(@PathParam("date") String date) {
+        Query query = em.createNamedQuery("\"EmployeeSchedule.findBySchDate\"").setParameter("schDate", date);
+        return query.getResultList();
     }
 
     @GET

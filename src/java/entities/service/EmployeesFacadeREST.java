@@ -65,7 +65,7 @@ public class EmployeesFacadeREST extends AbstractFacade<Employees> {
 
     @GET
     @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Employees> findAll() {
         return super.findAll();
     }

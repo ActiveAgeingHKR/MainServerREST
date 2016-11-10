@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -67,6 +68,14 @@ public class ManagersFacadeREST extends AbstractFacade<Managers> {
     @Produces({MediaType.APPLICATION_JSON})
     public List<Managers> findAll() {
         return super.findAll();
+    }
+    
+    @GET
+    @Path("username/{username}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Managers> findByUsername(@PathParam("username") String username) {
+        Query query = em.createNamedQuery("Managers.findByManUsername").setParameter("manUsername", username);
+        return query.getResultList();
     }
 
     @GET
