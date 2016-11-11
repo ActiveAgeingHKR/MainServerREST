@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -34,7 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "EmployeeSchedule.findBySchDate", query = "SELECT e FROM EmployeeSchedule e WHERE e.schDate = :schDate")
     , @NamedQuery(name = "EmployeeSchedule.findBySchFromTime", query = "SELECT e FROM EmployeeSchedule e WHERE e.schFromTime = :schFromTime")
     , @NamedQuery(name = "EmployeeSchedule.findBySchUntilTime", query = "SELECT e FROM EmployeeSchedule e WHERE e.schUntilTime = :schUntilTime")
-    , @NamedQuery(name = "EmployeeSchedule.findByEmplVisitedCust", query = "SELECT e FROM EmployeeSchedule e WHERE e.emplVisitedCust = :emplVisitedCust")})
+    , @NamedQuery(name = "EmployeeSchedule.findByEmplVisitedCust", query = "SELECT e FROM EmployeeSchedule e WHERE e.emplVisitedCust = :emplVisitedCust")
+    , @NamedQuery(name = "EmployeeSchedule.findByEmployeeId", query = "SELECT e FROM EmployeeSchedule e WHERE e.employeesEmpId = :employeesEmpId")
+    , @NamedQuery(name = "EmployeeSchedule.findByCustomerId", query = "SELECT e FROM EmployeeSchedule e WHERE e.customersCuId = :customersCuId")})
 public class EmployeeSchedule implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,22 +50,28 @@ public class EmployeeSchedule implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "sch_date")
-    @Temporal(TemporalType.DATE)
-    private Date schDate;
+    //@Temporal(TemporalType.DATE)
+    private String schDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "sch_from_time")
-    @Temporal(TemporalType.TIME)
-    private Date schFromTime;
+    //@Temporal(TemporalType.TIME)
+    private String schFromTime;
     @Basic(optional = false)
     @NotNull
     @Column(name = "sch_until_time")
-    @Temporal(TemporalType.TIME)
-    private Date schUntilTime;
+    //@Temporal(TemporalType.TIME)
+    private String schUntilTime;
     @Basic(optional = false)
     @NotNull
     @Column(name = "empl_visited_cust")
     private boolean emplVisitedCust;
+    @JoinColumn(name = "customers_cu_id", referencedColumnName = "cu_id")
+    @ManyToOne(optional = false)
+    private Customers customersCuId;
+    @JoinColumn(name = "employees_emp_id", referencedColumnName = "emp_id")
+    @ManyToOne(optional = false)
+    private Employees employeesEmpId;
 
     public EmployeeSchedule() {
     }
@@ -70,7 +80,7 @@ public class EmployeeSchedule implements Serializable {
         this.schId = schId;
     }
 
-    public EmployeeSchedule(Integer schId, Date schDate, Date schFromTime, Date schUntilTime, boolean emplVisitedCust) {
+    public EmployeeSchedule(Integer schId, String schDate, String schFromTime, String schUntilTime, boolean emplVisitedCust) {
         this.schId = schId;
         this.schDate = schDate;
         this.schFromTime = schFromTime;
@@ -86,27 +96,27 @@ public class EmployeeSchedule implements Serializable {
         this.schId = schId;
     }
 
-    public Date getSchDate() {
+    public String getSchDate() {
         return schDate;
     }
 
-    public void setSchDate(Date schDate) {
+    public void setSchDate(String schDate) {
         this.schDate = schDate;
     }
 
-    public Date getSchFromTime() {
+    public String getSchFromTime() {
         return schFromTime;
     }
 
-    public void setSchFromTime(Date schFromTime) {
+    public void setSchFromTime(String schFromTime) {
         this.schFromTime = schFromTime;
     }
 
-    public Date getSchUntilTime() {
+    public String getSchUntilTime() {
         return schUntilTime;
     }
 
-    public void setSchUntilTime(Date schUntilTime) {
+    public void setSchUntilTime(String schUntilTime) {
         this.schUntilTime = schUntilTime;
     }
 
@@ -116,6 +126,22 @@ public class EmployeeSchedule implements Serializable {
 
     public void setEmplVisitedCust(boolean emplVisitedCust) {
         this.emplVisitedCust = emplVisitedCust;
+    }
+    
+    public Customers getCustomersCuId() {
+        return customersCuId;
+    }
+
+    public void setCustomersCuId(Customers customersCuId) {
+        this.customersCuId = customersCuId;
+    }
+
+    public Employees getEmployeesEmpId() {
+        return employeesEmpId;
+    }
+
+    public void setEmployeesEmpId(Employees employeesEmpId) {
+        this.employeesEmpId = employeesEmpId;
     }
 
     @Override

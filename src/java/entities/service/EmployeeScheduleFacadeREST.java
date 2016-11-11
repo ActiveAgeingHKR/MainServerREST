@@ -26,7 +26,7 @@ import javax.ws.rs.core.MediaType;
  * @author Chris
  */
 @Stateless
-@Path("entities.employeeschedule")
+@Path("employeeschedule")
 public class EmployeeScheduleFacadeREST extends AbstractFacade<EmployeeSchedule> {
 
     @PersistenceContext(unitName = "MainServerRESTPU")
@@ -67,7 +67,15 @@ public class EmployeeScheduleFacadeREST extends AbstractFacade<EmployeeSchedule>
     @Path("date/{date}")
     @Produces({MediaType.APPLICATION_JSON})
     public List<EmployeeSchedule> findByDate(@PathParam("date") String date) {
-        Query query = em.createNamedQuery("\"EmployeeSchedule.findBySchDate\"").setParameter("schDate", date);
+        Query query = em.createNamedQuery("EmployeeSchedule.findBySchDate").setParameter("schDate", date);
+        return query.getResultList();
+    }
+    
+    @GET
+    @Path("employeeID/{employeeID}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<EmployeeSchedule> findByEmployeeID(@PathParam("employeeID") Integer employeeID) {
+        Query query = em.createNamedQuery("EmployeeSchedule.findByEmployeeId").setParameter("employeesEmpId", employeeID);
         return query.getResultList();
     }
 

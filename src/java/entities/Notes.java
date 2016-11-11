@@ -10,6 +10,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -45,6 +47,12 @@ public class Notes implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "content")
     private String content;
+    @JoinColumn(name = "customers_cu_id", referencedColumnName = "cu_id")
+    @ManyToOne(optional = false)
+    private Customers customersCuId;
+    @JoinColumn(name = "employees_emp_id", referencedColumnName = "emp_id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Employees employees;
 
     public Notes() {
     }
@@ -85,6 +93,22 @@ public class Notes implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+    
+    public Customers getCustomersCuId() {
+        return customersCuId;
+    }
+
+    public void setCustomersCuId(Customers customersCuId) {
+        this.customersCuId = customersCuId;
+    }
+
+    public Employees getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Employees employees) {
+        this.employees = employees;
     }
 
     @Override
