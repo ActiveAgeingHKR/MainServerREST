@@ -72,16 +72,24 @@ public class EmployeeScheduleFacadeREST extends AbstractFacade<EmployeeSchedule>
     }
     
     @GET
-    @Path("employeeID/{employeeID}")
+    @Path("customerID/{cuId}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<EmployeeSchedule> findByEmployeeID(@PathParam("employeeID") Integer employeeID) {
-        Query query = em.createNamedQuery("EmployeeSchedule.findByEmployeeId").setParameter("employeesEmpId", employeeID);
+    public List<EmployeeSchedule> findByCustomerID(@PathParam("cuId") Integer cuId) {
+        Query query = em.createNamedQuery("EmployeeSchedule.findByCustomerId").setParameter("cuId", cuId);
+        return query.getResultList();
+    }
+    
+    @GET
+    @Path("employeeID/{empId}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<EmployeeSchedule> findByEmployeeID(@PathParam("empId") Integer empId) {
+        Query query = em.createNamedQuery("EmployeeSchedule.findByEmployeeId").setParameter("empId", empId);
         return query.getResultList();
     }
 
     @GET
     @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<EmployeeSchedule> findAll() {
         return super.findAll();
     }

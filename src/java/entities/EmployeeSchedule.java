@@ -37,8 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "EmployeeSchedule.findBySchFromTime", query = "SELECT e FROM EmployeeSchedule e WHERE e.schFromTime = :schFromTime")
     , @NamedQuery(name = "EmployeeSchedule.findBySchUntilTime", query = "SELECT e FROM EmployeeSchedule e WHERE e.schUntilTime = :schUntilTime")
     , @NamedQuery(name = "EmployeeSchedule.findByEmplVisitedCust", query = "SELECT e FROM EmployeeSchedule e WHERE e.emplVisitedCust = :emplVisitedCust")
-    , @NamedQuery(name = "EmployeeSchedule.findByEmployeeId", query = "SELECT e FROM EmployeeSchedule e WHERE e.employeesEmpId = :employeesEmpId")
-    , @NamedQuery(name = "EmployeeSchedule.findByCustomerId", query = "SELECT e FROM EmployeeSchedule e WHERE e.customersCuId = :customersCuId")})
+    , @NamedQuery(name = "EmployeeSchedule.findByEmployeeId", query = "SELECT e FROM EmployeeSchedule e WHERE e.employeesEmpId.empId = :empId")
+    , @NamedQuery(name = "EmployeeSchedule.findByCustomerId", query = "SELECT e FROM EmployeeSchedule e WHERE e.customersCuId.cuId = :cuId")})
 public class EmployeeSchedule implements Serializable {
 
     private static final long serialVersionUID = 1L;
