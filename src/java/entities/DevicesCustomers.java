@@ -10,6 +10,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -42,6 +44,9 @@ public class DevicesCustomers implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "dev_name")
     private String devName;
+    @JoinColumn(name = "customers_cu_id", referencedColumnName = "cu_id")
+    @ManyToOne(optional = false)
+    private Customers customersCuId;
 
     public DevicesCustomers() {
     }
@@ -69,6 +74,14 @@ public class DevicesCustomers implements Serializable {
 
     public void setDevName(String devName) {
         this.devName = devName;
+    }
+    
+    public Customers getCustomersCuId() {
+        return customersCuId;
+    }
+
+    public void setCustomersCuId(Customers customersCuId) {
+        this.customersCuId = customersCuId;
     }
 
     @Override
