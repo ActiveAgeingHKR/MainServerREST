@@ -16,6 +16,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -29,6 +30,7 @@ import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -39,7 +41,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 public class VisitorScheduleFacadeREST extends AbstractFacade<VisitorSchedule> {
     
     /** The path to the folder where we want to store the uploaded files */
-    private static final String UPLOAD_FOLDER = "WEB-INF/";
+    private static final String UPLOAD_FOLDER = "C:\\Users\\Chris\\Documents\\NetBeansProjects\\MainServerREST\\src\\java\\resources\\";
 
     @PersistenceContext(unitName = "MainServerRESTPU")
     private EntityManager em;
@@ -104,7 +106,7 @@ public class VisitorScheduleFacadeREST extends AbstractFacade<VisitorSchedule> {
 	try {
             saveToFile(uploadedInputStream, uploadedFileLocation);
 	} catch (IOException e) {
-            return Response.status(500).entity("Can not save file").build();
+            return Response.status(500).entity("Can not save file "+e).build();
 	}
 	return Response.status(200)
 	.entity("File saved to " + uploadedFileLocation).build();
@@ -134,6 +136,29 @@ public class VisitorScheduleFacadeREST extends AbstractFacade<VisitorSchedule> {
     public VisitorSchedule find(@PathParam("id") PathSegment id) {
         entities.VisitorSchedulePK key = getPrimaryKey(id);
         return super.find(key);
+    }
+    
+    @GET
+    @Path("visit/{hash}")
+    @Produces({MediaType.TEXT_HTML})
+    public String getVisitorCard(@PathParam("hash") String hash) throws IOException {
+        VisitorSchedule vs = null;
+        String htmlString = "";
+        Query query = em.createNamedQuery("VisitorSchedule.findByVisitHash").setParameter("visitHash", hash);
+        if(query.getResultList() != null) {
+            vs = (VisitorSchedule)query.getResultList().get(0);
+        //if a visitor schedule with this hashcode exists, use the fields to replace the defaults in html template
+        File htmlTemplateFile = new File("resources/visitortemplate.html");
+        htmlString = FileUtils.readFileToString(htmlTemplateFile);
+        htmlString = htmlString.replace("$Firstname", vs.getVisitors().getVisFirstname());
+        htmlString = htmlString.replace("$Lirstname", vs.getVisitors().getVisLastname());
+        htmlString = htmlString.replace("$Company", vs.getVisitors().getCompanyCompId().getCompName());
+        htmlString = htmlString.replace("$From", vs.getVisitStartTime().toString());
+        htmlString = htmlString.replace("$Until", vs.getVisitEndTime().toString());
+        File newHtmlFile = new File("path/new.html");
+        FileUtils.writeStringToFile(newHtmlFile, htmlString);
+        }
+        return htmlString;
     }
 
     @GET
@@ -172,7 +197,8 @@ public class VisitorScheduleFacadeREST extends AbstractFacade<VisitorSchedule> {
 	 */
 	private void saveToFile(InputStream inStream, String target)
 			throws IOException {
-		OutputStream out = null;
+            
+                OutputStream out = null;
 		int read = 0;
 		byte[] bytes = new byte[1024];
 		out = new FileOutputStream(new File(target));
@@ -181,6 +207,8 @@ public class VisitorScheduleFacadeREST extends AbstractFacade<VisitorSchedule> {
 		}
 		out.flush();
 		out.close();
+            
+		
 	}
     
     /**
