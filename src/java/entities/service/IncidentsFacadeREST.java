@@ -82,6 +82,13 @@ public class IncidentsFacadeREST extends AbstractFacade<Incidents> {
     public String countREST() {
         return String.valueOf(super.count());
     }
+    
+    @POST
+    @Path("isalive")
+    @Produces({MediaType.APPLICATION_JSON})
+    public void isAlive() {
+        
+    }
 
     @Override
     protected EntityManager getEntityManager() {
