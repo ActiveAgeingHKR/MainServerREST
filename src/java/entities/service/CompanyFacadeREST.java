@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
  * @author Chris
  */
 @Stateless
-@Path("entities.company")
+@Path("company")
 public class CompanyFacadeREST extends AbstractFacade<Company> {
 
     @PersistenceContext(unitName = "MainServerRESTPU")
@@ -57,21 +57,21 @@ public class CompanyFacadeREST extends AbstractFacade<Company> {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Company find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Company> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Company> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }

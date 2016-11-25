@@ -118,7 +118,7 @@ public class VisitorScheduleFacadeREST extends AbstractFacade<VisitorSchedule> {
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") PathSegment id, VisitorSchedule entity) {
         super.edit(entity);
     }
@@ -132,7 +132,7 @@ public class VisitorScheduleFacadeREST extends AbstractFacade<VisitorSchedule> {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public VisitorSchedule find(@PathParam("id") PathSegment id) {
         entities.VisitorSchedulePK key = getPrimaryKey(id);
         return super.find(key);
@@ -163,14 +163,14 @@ public class VisitorScheduleFacadeREST extends AbstractFacade<VisitorSchedule> {
 
     @GET
     @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<VisitorSchedule> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<VisitorSchedule> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }

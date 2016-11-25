@@ -27,7 +27,7 @@ import javax.ws.rs.core.MediaType;
  * @author Chris
  */
 @Stateless
-@Path("entities.reminders")
+@Path("reminders")
 public class RemindersFacadeREST extends AbstractFacade<Reminders> {
 
     @PersistenceContext(unitName = "MainServerRESTPU")
@@ -66,28 +66,28 @@ public class RemindersFacadeREST extends AbstractFacade<Reminders> {
 
     @GET
     @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Reminders> findAll() {
         return super.findAll();
     }
     
     @GET
     @Path("/data/{data}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List <Reminders> findByRemData(@PathParam("data") Date data) {
         Query query = em.createNamedQuery("Reminders.findByRemData").setParameter("remData", data);
         return query.getResultList();
     }
     @GET
     @Path("/time/{time}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List <Reminders> findByRemTime(@PathParam("time") Date time) {
         Query query = em.createNamedQuery("Reminders.findByRemTime").setParameter("remTime", time);
         return query.getResultList();
     }
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Reminders> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }

@@ -58,7 +58,7 @@ public class EmployeeScheduleFacadeREST extends AbstractFacade<EmployeeSchedule>
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public EmployeeSchedule find(@PathParam("id") Integer id) {
         return super.find(id);
     }
@@ -96,7 +96,7 @@ public class EmployeeScheduleFacadeREST extends AbstractFacade<EmployeeSchedule>
 
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<EmployeeSchedule> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }

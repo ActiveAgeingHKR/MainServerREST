@@ -27,7 +27,7 @@ import javax.ws.rs.core.PathSegment;
  * @author Chris
  */
 @Stateless
-@Path("entities.notes")
+@Path("notes")
 public class NotesFacadeREST extends AbstractFacade<Notes> {
 
     @PersistenceContext(unitName = "MainServerRESTPU")
@@ -81,7 +81,7 @@ public class NotesFacadeREST extends AbstractFacade<Notes> {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Notes find(@PathParam("id") PathSegment id) {
         entities.NotesPK key = getPrimaryKey(id);
         return super.find(key);
@@ -89,14 +89,14 @@ public class NotesFacadeREST extends AbstractFacade<Notes> {
 
     @GET
     @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Notes> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Notes> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }

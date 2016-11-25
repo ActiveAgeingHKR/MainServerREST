@@ -27,7 +27,7 @@ import javax.ws.rs.core.MediaType;
  * @author Chris
  */
 @Stateless
-@Path("entities.visitors")
+@Path("visitors")
 public class VisitorsFacadeREST extends AbstractFacade<Visitors> {
 
     @PersistenceContext(unitName = "MainServerRESTPU")

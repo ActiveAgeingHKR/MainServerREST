@@ -27,7 +27,7 @@ import javax.ws.rs.core.MediaType;
  * @author Chris
  */
 @Stateless
-@Path("entities.tasks")
+@Path("tasks")
 public class TasksFacadeREST extends AbstractFacade<Tasks> {
 
     @PersistenceContext(unitName = "MainServerRESTPU")
@@ -39,14 +39,14 @@ public class TasksFacadeREST extends AbstractFacade<Tasks> {
 
     @POST
     @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void create(Tasks entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Integer id, Tasks entity) {
         super.edit(entity);
     }
@@ -59,42 +59,42 @@ public class TasksFacadeREST extends AbstractFacade<Tasks> {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Tasks find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Tasks> findAll() {
         return super.findAll();
     }
 //findByTaskTitle findByTaskContent findByTaskdueDate findByTaskCompl
      @GET
     @Path("/title/{title}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List <Tasks> findByTaskTitle(@PathParam("title") String title) {
         Query query = em.createNamedQuery("Tasks.findByTaskTitle").setParameter("taskTitle", title);
         return query.getResultList();
     }
        @GET
     @Path("/conten/{conten}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List <Tasks> findByTaskContent(@PathParam("conten") String conten) {
         Query query = em.createNamedQuery("Tasks.findByTaskContent").setParameter("taskContent", conten);
         return query.getResultList();
     }
          @GET
     @Path("/dueDate/{dueDate}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List <Tasks> findByTaskdueDate(@PathParam("dueDate") Date dueDate) {
         Query query = em.createNamedQuery("Tasks.findByTaskdueDate").setParameter("taskdueDate", dueDate);
         return query.getResultList();
     }
     @GET
     @Path("/compl/{compl}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List <Tasks> findByTaskCompl(@PathParam("compl") boolean compl) {
         Query query = em.createNamedQuery("Tasks.findByTaskCompl").setParameter("taskCompl", compl);
         return query.getResultList();
@@ -102,7 +102,7 @@ public class TasksFacadeREST extends AbstractFacade<Tasks> {
     
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Tasks> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
