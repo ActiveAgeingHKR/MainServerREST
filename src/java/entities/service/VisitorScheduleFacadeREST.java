@@ -28,9 +28,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.Response;
+import org.apache.commons.io.FileUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import org.apache.commons.io.FileUtils;
+
 
 /**
  *
@@ -149,14 +150,14 @@ public class VisitorScheduleFacadeREST extends AbstractFacade<VisitorSchedule> {
             vs = (VisitorSchedule)query.getResultList().get(0);
         //if a visitor schedule with this hashcode exists, use the fields to replace the defaults in html template
         File htmlTemplateFile = new File("resources/visitortemplate.html");
-        htmlString = FileUtils.readFileToString(htmlTemplateFile);
+        htmlString = FileUtils.readFileToString(htmlTemplateFile, "UTF-8");
         htmlString = htmlString.replace("$Firstname", vs.getVisitors().getVisFirstname());
         htmlString = htmlString.replace("$Lirstname", vs.getVisitors().getVisLastname());
         htmlString = htmlString.replace("$Company", vs.getVisitors().getCompanyCompId().getCompName());
         htmlString = htmlString.replace("$From", vs.getVisitStartTime().toString());
         htmlString = htmlString.replace("$Until", vs.getVisitEndTime().toString());
         File newHtmlFile = new File("path/new.html");
-        FileUtils.writeStringToFile(newHtmlFile, htmlString);
+        FileUtils.writeStringToFile(newHtmlFile, htmlString,"UTF-8");
         }
         return htmlString;
     }
