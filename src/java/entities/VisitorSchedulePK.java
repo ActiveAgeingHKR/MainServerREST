@@ -10,6 +10,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -23,8 +24,9 @@ public class VisitorSchedulePK implements Serializable {
     private int visSchId;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "visitors_vis_id")
-    private int visitorsVisId;
+    private String visitorsVisId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "customers_cu_id")
@@ -33,7 +35,7 @@ public class VisitorSchedulePK implements Serializable {
     public VisitorSchedulePK() {
     }
 
-    public VisitorSchedulePK(int visSchId, int visitorsVisId, int customersCuId) {
+    public VisitorSchedulePK(int visSchId, String visitorsVisId, int customersCuId) {
         this.visSchId = visSchId;
         this.visitorsVisId = visitorsVisId;
         this.customersCuId = customersCuId;
@@ -47,11 +49,11 @@ public class VisitorSchedulePK implements Serializable {
         this.visSchId = visSchId;
     }
 
-    public int getVisitorsVisId() {
+    public String getVisitorsVisId() {
         return visitorsVisId;
     }
 
-    public void setVisitorsVisId(int visitorsVisId) {
+    public void setVisitorsVisId(String visitorsVisId) {
         this.visitorsVisId = visitorsVisId;
     }
 
@@ -67,7 +69,7 @@ public class VisitorSchedulePK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) visSchId;
-        hash += (int) visitorsVisId;
+        //hash += (String) visitorsVisId;
         hash += (int) customersCuId;
         return hash;
     }

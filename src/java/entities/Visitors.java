@@ -45,10 +45,10 @@ public class Visitors implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "vis_id")
-    private Integer visId;
+    private String visId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -78,11 +78,11 @@ public class Visitors implements Serializable {
     public Visitors() {
     }
 
-    public Visitors(Integer visId) {
+    public Visitors(String visId) {
         this.visId = visId;
     }
 
-    public Visitors(Integer visId, String visFirstname, String visLastname, String visEmail, String visPhone) {
+    public Visitors(String visId, String visFirstname, String visLastname, String visEmail, String visPhone) {
         this.visId = visId;
         this.visFirstname = visFirstname;
         this.visLastname = visLastname;
@@ -90,11 +90,11 @@ public class Visitors implements Serializable {
         this.visPhone = visPhone;
     }
 
-    public Integer getVisId() {
+    public String getVisId() {
         return visId;
     }
 
-    public void setVisId(Integer visId) {
+    public void setVisId(String visId) {
         this.visId = visId;
     }
 

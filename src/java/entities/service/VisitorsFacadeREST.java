@@ -53,7 +53,7 @@ public class VisitorsFacadeREST extends AbstractFacade<Visitors> {
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
+    public void remove(@PathParam("id") String id) {
         super.remove(super.find(id));
     }
 

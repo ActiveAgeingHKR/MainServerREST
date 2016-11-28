@@ -63,7 +63,7 @@ public class VisitorScheduleFacadeREST extends AbstractFacade<VisitorSchedule> {
         }
         java.util.List<String> visitorsVisId = map.get("visitorsVisId");
         if (visitorsVisId != null && !visitorsVisId.isEmpty()) {
-            key.setVisitorsVisId(new java.lang.Integer(visitorsVisId.get(0)));
+            key.setVisitorsVisId(new java.lang.String(visitorsVisId.get(0)));
         }
         java.util.List<String> customersCuId = map.get("customersCuId");
         if (customersCuId != null && !customersCuId.isEmpty()) {

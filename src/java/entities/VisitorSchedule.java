@@ -47,18 +47,18 @@ public class VisitorSchedule implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "visit_start_date")
-    @Temporal(TemporalType.DATE)
-    private Date visitStartDate;
+    //@Temporal(TemporalType.DATE)
+    private String visitStartDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "visit_start_time")
-    @Temporal(TemporalType.TIME)
-    private Date visitStartTime;
+    //@Temporal(TemporalType.TIME)
+    private String visitStartTime;
     @Basic(optional = false)
     @NotNull
     @Column(name = "visit_end_time")
-    @Temporal(TemporalType.TIME)
-    private Date visitEndTime;
+    //@Temporal(TemporalType.TIME)
+    private String visitEndTime;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 7)
@@ -72,6 +72,9 @@ public class VisitorSchedule implements Serializable {
     @JoinColumn(name = "visitors_vis_id", referencedColumnName = "vis_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Visitors visitors;
+    @JoinColumn(name = "customers_cu_id", referencedColumnName = "cu_id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Customers customers;
 
     public VisitorSchedule() {
     }
@@ -80,7 +83,7 @@ public class VisitorSchedule implements Serializable {
         this.visitorSchedulePK = visitorSchedulePK;
     }
 
-    public VisitorSchedule(VisitorSchedulePK visitorSchedulePK, Date visitStartDate, Date visitStartTime, Date visitEndTime, String visRepetitionCircle, String visitHash) {
+    public VisitorSchedule(VisitorSchedulePK visitorSchedulePK, String visitStartDate, String visitStartTime, String visitEndTime, String visRepetitionCircle, String visitHash) {
         this.visitorSchedulePK = visitorSchedulePK;
         this.visitStartDate = visitStartDate;
         this.visitStartTime = visitStartTime;
@@ -89,7 +92,7 @@ public class VisitorSchedule implements Serializable {
         this.visitHash = visitHash;
     }
 
-    public VisitorSchedule(int visSchId, int visitorsVisId, int customersCuId) {
+    public VisitorSchedule(int visSchId, String visitorsVisId, int customersCuId) {
         this.visitorSchedulePK = new VisitorSchedulePK(visSchId, visitorsVisId, customersCuId);
     }
 
@@ -101,27 +104,27 @@ public class VisitorSchedule implements Serializable {
         this.visitorSchedulePK = visitorSchedulePK;
     }
 
-    public Date getVisitStartDate() {
+    public String getVisitStartDate() {
         return visitStartDate;
     }
 
-    public void setVisitStartDate(Date visitStartDate) {
+    public void setVisitStartDate(String visitStartDate) {
         this.visitStartDate = visitStartDate;
     }
 
-    public Date getVisitStartTime() {
+    public String getVisitStartTime() {
         return visitStartTime;
     }
 
-    public void setVisitStartTime(Date visitStartTime) {
+    public void setVisitStartTime(String visitStartTime) {
         this.visitStartTime = visitStartTime;
     }
 
-    public Date getVisitEndTime() {
+    public String getVisitEndTime() {
         return visitEndTime;
     }
 
-    public void setVisitEndTime(Date visitEndTime) {
+    public void setVisitEndTime(String visitEndTime) {
         this.visitEndTime = visitEndTime;
     }
 
@@ -147,6 +150,14 @@ public class VisitorSchedule implements Serializable {
 
     public void setVisitors(Visitors visitors) {
         this.visitors = visitors;
+    }
+    
+    public Customers getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Customers customers) {
+        this.customers = customers;
     }
 
     @Override
