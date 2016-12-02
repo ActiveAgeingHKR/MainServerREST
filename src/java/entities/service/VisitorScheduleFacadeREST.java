@@ -8,15 +8,21 @@ package entities.service;
 import entities.VisitorSchedule;
 import entities.VisitorSchedulePK;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -25,10 +31,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -41,8 +50,12 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 @Path("visitorschedule")
 public class VisitorScheduleFacadeREST extends AbstractFacade<VisitorSchedule> {
     
+    
+    @Context ServletContext context;
+    
+    
     /** The path to the folder where we want to store the uploaded files */
-    private static final String UPLOAD_FOLDER = "C:\\Users\\Chris\\Documents\\NetBeansProjects\\MainServerREST\\src\\java\\resources\\";
+    private static final String UPLOAD_FOLDER = "C:\\Users\\Chris\\Documents\\NetBeansProjects\\MainServerREST\\web";
 
     @PersistenceContext(unitName = "MainServerRESTPU")
     private EntityManager em;
@@ -142,24 +155,46 @@ public class VisitorScheduleFacadeREST extends AbstractFacade<VisitorSchedule> {
     @GET
     @Path("visit/{hash}")
     @Produces({MediaType.TEXT_HTML})
-    public String getVisitorCard(@PathParam("hash") String hash) throws IOException {
+    public Response getVisitorCard(@PathParam("hash") String hash) throws IOException, URISyntaxException {
         VisitorSchedule vs = null;
-        String htmlString = "";
+        java.net.URI uri = null;
         Query query = em.createNamedQuery("VisitorSchedule.findByVisitHash").setParameter("visitHash", hash);
-        if(query.getResultList() != null) {
+        if(!query.getResultList().isEmpty()) {
             vs = (VisitorSchedule)query.getResultList().get(0);
-        //if a visitor schedule with this hashcode exists, use the fields to replace the defaults in html template
-        File htmlTemplateFile = new File("resources/visitortemplate.html");
-        htmlString = FileUtils.readFileToString(htmlTemplateFile, "UTF-8");
-        htmlString = htmlString.replace("$Firstname", vs.getVisitors().getVisFirstname());
-        htmlString = htmlString.replace("$Lirstname", vs.getVisitors().getVisLastname());
-        htmlString = htmlString.replace("$Company", vs.getVisitors().getCompanyCompId().getCompName());
-        htmlString = htmlString.replace("$From", vs.getVisitStartTime().toString());
-        htmlString = htmlString.replace("$Until", vs.getVisitEndTime().toString());
-        File newHtmlFile = new File("path/new.html");
-        FileUtils.writeStringToFile(newHtmlFile, htmlString,"UTF-8");
+        //if a visitor schedule with this hashcode exists, send the fields to the jsp template
+        String firstName = vs.getVisitors().getVisFirstname();
+        String lastName = vs.getVisitors().getVisLastname();
+        String compName = vs.getVisitors().getCompanyCompId().getCompName();
+        String startTime = vs.getVisitStartTime().toString();
+        String endTime = vs.getVisitEndTime().toString();
+        uri = new java.net.URI("../VisitCard.jsp?msg=found"+"&first="+firstName+"&last="+lastName+"&comp="+compName+
+                "&start="+startTime+"&end="+endTime+"&hash="+hash);
+        } else {
+            uri = new java.net.URI("../VisitCard.jsp?msg=NoRecord");
         }
-        return htmlString;
+        return Response.temporaryRedirect(uri).build();
+    }
+    
+    @Path("sample")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getHello(@Context ServletContext ctx ) {
+        String path = ctx.getContextPath();
+        return path;
+    }
+
+    
+    @GET
+    @Path("image")
+    @Produces({"image/jpeg"})
+    public byte[] getImage() throws IOException {
+        byte[] bytes = null;
+        System.out.println(new File(".").getAbsolutePath());
+        FileInputStream fos = new FileInputStream("WEB-INF/hulk.jpg");
+        bytes = IOUtils.toByteArray(fos);
+        //bytes = IOUtils.toByteArray(this.getClass().getResourceAsStream("resources/hulk.jpg"));
+        //File testImage = new File("resources/hulk.jpg");
+        return bytes;
     }
 
     @GET
