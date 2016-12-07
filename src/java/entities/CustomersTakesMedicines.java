@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "CustomersTakesMedicines.findByMedId", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.customersTakesMedicinesPK.medicinsId = :medicinsId")
     , @NamedQuery(name = "CustomersTakesMedicines.findByMedDosage", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.medDosage = :medDosage")
     , @NamedQuery(name = "CustomersTakesMedicines.findByMedStartDate", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.medStartDate = :medStartDate")
-    , @NamedQuery(name = "CustomersTakesMedicines.findByMedIntakeSched", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.medInterval= :medInterval")})
+    , @NamedQuery(name = "CustomersTakesMedicines.findByMedicationintakeschedule", query = "SELECT c FROM CustomersTakesMedicines c WHERE c.medicationintakeschedule = :medicationintakeschedule")})
 public class CustomersTakesMedicines implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,8 +53,12 @@ public class CustomersTakesMedicines implements Serializable {
     private Date medStartDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "med_interval")
-    private double medInterval;
+    @Column(name = "`Medication intake schedule`") //single quotes essential for query to work because spaces in column name
+    // see http://stackoverflow.com/questions/14190798/how-to-select-a-column-name-with-space-between-in-mysql-on-liunx-ubuntu
+    private double medicationintakeschedule;
+    @JoinColumn(name = "customers_id", referencedColumnName = "cu_id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Customers customers;
     @JoinColumn(name = "medicins_id", referencedColumnName = "med_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Medicines medicines;
@@ -70,7 +74,7 @@ public class CustomersTakesMedicines implements Serializable {
         this.customersTakesMedicinesPK = customersTakesMedicinesPK;
         this.medDosage = medDosage;
         this.medStartDate = medStartDate;
-        this.medInterval = medicationintakeschedule;
+        this.medicationintakeschedule = medicationintakeschedule;
     }
 
     public CustomersTakesMedicines(int customersId, int medicinsId) {
@@ -101,12 +105,20 @@ public class CustomersTakesMedicines implements Serializable {
         this.medStartDate = medStartDate;
     }
 
-    public double getMedicationintakeschedule() {
-        return medInterval;
+   public double getMedicationintakeschedule() {
+        return medicationintakeschedule;
     }
 
-    public void setMedicationintakeschedule(double medInterval) {
-        this.medInterval = medInterval;
+    public void setMedicationintakeschedule(double medicationintakeschedule) {
+        this.medicationintakeschedule = medicationintakeschedule;
+    }
+    
+    public Customers getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Customers customers) {
+        this.customers = customers;
     }
 
     public Medicines getMedicines() {
