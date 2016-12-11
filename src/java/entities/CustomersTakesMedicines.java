@@ -49,8 +49,8 @@ public class CustomersTakesMedicines implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "med_start_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date medStartDate;
+    //@Temporal(TemporalType.TIMESTAMP)
+    private String medStartDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "`Medication intake schedule`") //single quotes essential for query to work because spaces in column name
@@ -70,7 +70,7 @@ public class CustomersTakesMedicines implements Serializable {
         this.customersTakesMedicinesPK = customersTakesMedicinesPK;
     }
 
-    public CustomersTakesMedicines(CustomersTakesMedicinesPK customersTakesMedicinesPK, String medDosage, Date medStartDate, double medicationintakeschedule) {
+    public CustomersTakesMedicines(CustomersTakesMedicinesPK customersTakesMedicinesPK, String medDosage, String medStartDate, double medicationintakeschedule) {
         this.customersTakesMedicinesPK = customersTakesMedicinesPK;
         this.medDosage = medDosage;
         this.medStartDate = medStartDate;
@@ -97,11 +97,11 @@ public class CustomersTakesMedicines implements Serializable {
         this.medDosage = medDosage;
     }
 
-    public Date getMedStartDate() {
+    public String getMedStartDate() {
         return medStartDate;
     }
 
-    public void setMedStartDate(Date medStartDate) {
+    public void setMedStartDate(String medStartDate) {
         this.medStartDate = medStartDate;
     }
 

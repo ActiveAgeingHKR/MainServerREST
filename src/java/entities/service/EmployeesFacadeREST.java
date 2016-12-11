@@ -7,6 +7,8 @@ package entities.service;
 
 import entities.Employees;
 import java.util.List;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +22,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -27,6 +30,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("employees")
+@DeclareRoles({"ADMIN", "EMPLOYEE"})
 public class EmployeesFacadeREST extends AbstractFacade<Employees> {
 
     @PersistenceContext(unitName = "MainServerRESTPU")
@@ -41,6 +45,14 @@ public class EmployeesFacadeREST extends AbstractFacade<Employees> {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Employees entity) {
         super.create(entity);
+    }
+    
+    @POST
+    @Path("login")
+    @RolesAllowed({"EMPLOYEE"})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response login() {
+        return Response.status(200).entity("Client authorized").build();
     }
 
     @PUT
@@ -102,7 +114,7 @@ public class EmployeesFacadeREST extends AbstractFacade<Employees> {
         return query.getResultList();
     }
     
-        @GET
+    @GET
     @Path("/email/{email}")
     @Produces({MediaType.APPLICATION_JSON})
     public List <Employees> findByEmpEmail(@PathParam("email") String email) {
