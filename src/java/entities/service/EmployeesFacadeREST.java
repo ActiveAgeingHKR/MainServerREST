@@ -30,7 +30,7 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("employees")
-@DeclareRoles({"ADMIN", "EMPLOYEE"})
+
 public class EmployeesFacadeREST extends AbstractFacade<Employees> {
 
     @PersistenceContext(unitName = "MainServerRESTPU")
@@ -47,9 +47,8 @@ public class EmployeesFacadeREST extends AbstractFacade<Employees> {
         super.create(entity);
     }
     
-    @POST
+    @GET
     @Path("login")
-    @RolesAllowed({"EMPLOYEE"})
     @Produces({MediaType.APPLICATION_JSON})
     public Response login() {
         return Response.status(200).entity("Client authorized").build();
