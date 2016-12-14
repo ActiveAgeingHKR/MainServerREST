@@ -6,6 +6,7 @@
 package entities.service;
 
 import entities.Managers;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,6 +21,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -34,6 +36,13 @@ public class ManagersFacadeREST extends AbstractFacade<Managers> {
 
     public ManagersFacadeREST() {
         super(Managers.class);
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Managers find(@PathParam("id") Integer id) {
+        return super.find(id);
     }
 
     @POST
@@ -56,11 +65,21 @@ public class ManagersFacadeREST extends AbstractFacade<Managers> {
         super.remove(super.find(id));
     }
 
-    @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public Managers find(@PathParam("id") Integer id) {
-        return super.find(id);
+    @POST
+    @Path("login/{username-password}")
+    public Response login(@PathParam("username-password") String usernamepassword) {
+        System.out.println("Testing: " + usernamepassword);
+        String[] splitted = usernamepassword.split("-");
+        String userName = splitted[0];
+        String Password = splitted[1];
+        Query query = em.createNamedQuery("Managers.Login").setParameter("manUsername", userName).setParameter("manPassword", Password);
+        List result1 = query.getResultList();
+        System.out.println(result1.toString());
+        if (!result1.isEmpty()) {
+            return Response.status(200).entity("Client authorized").build();
+        } else {
+            return Response.status(403).entity("Client not authorized").build();
+        }
     }
 
     @GET
@@ -69,7 +88,7 @@ public class ManagersFacadeREST extends AbstractFacade<Managers> {
     public List<Managers> findAll() {
         return super.findAll();
     }
-    
+
     @GET
     @Path("username/{username}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -96,5 +115,5 @@ public class ManagersFacadeREST extends AbstractFacade<Managers> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

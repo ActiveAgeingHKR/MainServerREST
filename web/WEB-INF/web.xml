@@ -22,15 +22,49 @@
    
    
    
-   <security-constraint>
-      <web-resource-collection>
-         <web-resource-name>employees</web-resource-name>
-         <url-pattern>/api/employees/*</url-pattern>
-         <http-method>GET</http-method>
-      </web-resource-collection>
-      <auth-constraint>
-         <role-name>EMPLOYEE</role-name>
-      </auth-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>employees</web-resource-name>
+            <url-pattern>/api/employees/*</url-pattern>
+            <url-pattern>/api/customers/*</url-pattern>
+            <url-pattern>/api/customersmedicines/*</url-pattern>
+            <url-pattern>/api/employeeschedule/*</url-pattern>
+            <url-pattern>/api/incidents/*</url-pattern>
+            <url-pattern>/api/reminders/*</url-pattern>
+            <url-pattern>/api/notes/*</url-pattern>
+            <url-pattern>/api/persons/*</url-pattern>
+            <url-pattern>/api/tasks/*</url-pattern>
+
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+            <http-method>UPDATE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>EMPLOYEE</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>admin</web-resource-name>
+            <url-pattern>/api/managers/*</url-pattern>
+            <url-pattern>/api/devicescustomers/*</url-pattern>
+            <url-pattern>/api/visitors/*</url-pattern>
+            <url-pattern>/api/visitorschedule/*</url-pattern>
+            <url-pattern>/api/medicines/*</url-pattern>
+            <url-pattern>/api/company/*</url-pattern>
+            
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+            <http-method>UPDATE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+        </auth-constraint>
     </security-constraint>
 
     <login-config>
