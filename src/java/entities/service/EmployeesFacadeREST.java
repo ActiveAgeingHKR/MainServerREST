@@ -46,12 +46,22 @@ public class EmployeesFacadeREST extends AbstractFacade<Employees> {
     public void create(Employees entity) {
         super.create(entity);
     }
-    
-    @GET
-    @Path("login")
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response login() {
-        return Response.status(200).entity("Client authorized").build();
+
+    @POST
+    @Path("login/{username-password}")
+    public Response login(@PathParam("username-password") String usernamepassword) {
+        System.out.println("Testing: " + usernamepassword);
+        String[] splitted = usernamepassword.split("-");
+        String userName = splitted[0];
+        String Password = splitted[1];
+        Query query = em.createNamedQuery("Employees.Login").setParameter("empUsername", userName).setParameter("empPassword", Password);
+        List result1 = query.getResultList();
+        System.out.println(result1.toString());
+        if (!result1.isEmpty()) {
+            return Response.status(200).entity("Client authorized").build();
+        } else {
+            return Response.status(403).entity("Client not authorized").build();
+        }
     }
 
     @PUT
@@ -81,61 +91,62 @@ public class EmployeesFacadeREST extends AbstractFacade<Employees> {
         return super.findAll();
     }
 
-    
     @GET
     @Path("/firstname/{firstname}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List <Employees> findByEmpFtname(@PathParam("firstname") String firstname) {
+    public List<Employees> findByEmpFtname(@PathParam("firstname") String firstname) {
         Query query = em.createNamedQuery("Employees.findByEmpFirstname").setParameter("empFirstname", firstname);
         return query.getResultList();
     }
-    
+
     @GET
     @Path("/lastname/{lastname}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List <Employees> findByEmpLastname(@PathParam("lastname") String lastname) {
+    public List<Employees> findByEmpLastname(@PathParam("lastname") String lastname) {
         Query query = em.createNamedQuery("Employees.findByEmpLastname").setParameter("empLastname", lastname);
         return query.getResultList();
     }
-    
+
     @GET
     @Path("/username/{username}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List <Employees> findByEmpUsername(@PathParam("username") String username) {
+    public List<Employees> findByEmpUsername(@PathParam("username") String username) {
         Query query = em.createNamedQuery("Employees.findByEmpUsername").setParameter("empUsername", username);
         return query.getResultList();
     }
+
     @GET
     @Path("/password/{password}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List <Employees> findByEmpPassword(@PathParam("password") String password) {
+    public List<Employees> findByEmpPassword(@PathParam("password") String password) {
         Query query = em.createNamedQuery("Employees.findByEmpPassword").setParameter("empPassword", password);
         return query.getResultList();
     }
-    
+
     @GET
     @Path("/email/{email}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List <Employees> findByEmpEmail(@PathParam("email") String email) {
+    public List<Employees> findByEmpEmail(@PathParam("email") String email) {
         Query query = em.createNamedQuery("Employees.findByEmpEmail").setParameter("empEmail", email);
         return query.getResultList();
     }
-    
+
     @GET
     @Path("/phone/{phone}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List <Employees> findByEmpPhone(@PathParam("phone") String phone) {
+    public List<Employees> findByEmpPhone(@PathParam("phone") String phone) {
         Query query = em.createNamedQuery("Employees.findByEmpPhone").setParameter("empPhone", phone);
         return query.getResultList();
     }
+
     @GET
     @Path("/registered/{registered}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List <Employees> findByEmpRegistered(@PathParam("registered") boolean registered) {
+    public List<Employees> findByEmpRegistered(@PathParam("registered") boolean registered) {
         Query query = em.createNamedQuery("findByEmpRegistered.findByEmpPassword").setParameter("empRegistered", registered);
         return query.getResultList();
     }
-    
+
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -154,5 +165,5 @@ public class EmployeesFacadeREST extends AbstractFacade<Employees> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
