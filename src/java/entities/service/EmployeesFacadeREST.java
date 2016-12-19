@@ -114,6 +114,17 @@ public class EmployeesFacadeREST extends AbstractFacade<Employees> {
         Query query = em.createNamedQuery("Employees.findByEmpUsername").setParameter("empUsername", username);
         return query.getResultList();
     }
+    
+    @GET
+    @Path("/idbyusername/{username}")
+    @Produces({MediaType.TEXT_PLAIN})
+    public Integer findIdByEmpName(@PathParam("username") String username) {
+        //return super.find(email);
+        Query query = em.createNamedQuery("Employees.findIdByEmpName").setParameter("empUsername", username);  
+        List<Employees> emps = query.getResultList();
+        return emps.get(0).getEmpId();
+    }
+
 
     @GET
     @Path("/password/{password}")
@@ -161,17 +172,7 @@ public class EmployeesFacadeREST extends AbstractFacade<Employees> {
         return String.valueOf(super.count());
     }
     
-
     
-    @GET
-    @Path("/idbyusername/{username}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<Employees> findIdByEmpName(@PathParam("username") String username) {
-        //return super.find(email);
-        Query query = em.createNamedQuery("Employees.findIdByEmpName").setParameter("username",username);    
-        return query.getResultList();
-    }
-
     @Override
     protected EntityManager getEntityManager() {
         return em;
