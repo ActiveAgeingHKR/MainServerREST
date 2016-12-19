@@ -160,6 +160,17 @@ public class EmployeesFacadeREST extends AbstractFacade<Employees> {
     public String countREST() {
         return String.valueOf(super.count());
     }
+    
+
+    
+    @GET
+    @Path("/idbyusername/{username}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Employees> findIdByEmpName(@PathParam("username") String username) {
+        //return super.find(email);
+        Query query = em.createNamedQuery("Employees.findIdByEmpName").setParameter("username",username);    
+        return query.getResultList();
+    }
 
     @Override
     protected EntityManager getEntityManager() {
