@@ -38,8 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "EmployeeSchedule.findBySchUntilTime", query = "SELECT e FROM EmployeeSchedule e WHERE e.schUntilTime = :schUntilTime")
     , @NamedQuery(name = "EmployeeSchedule.findByEmplVisitedCust", query = "SELECT e FROM EmployeeSchedule e WHERE e.emplVisitedCust = :emplVisitedCust")
     , @NamedQuery(name = "EmployeeSchedule.findByEmployeeId", query = "SELECT e FROM EmployeeSchedule e WHERE e.employeesEmpId.empId = :empId")
-    ,@NamedQuery(name = "EmployeeSchedule.findayTodaySchByEmName", query = "SELECT * FROM caretaker_db.employee_schedule WHERE employees_emp_id "
-            + "IN (SELECT emp_id FROM caretaker_db.employees where employees.emp_username='JohnDoe') AND sch_date='2016-12-18';")
+//    ,@NamedQuery(name = "EmployeeSchedule.findayTodaySchByEmName", query = "SELECT * FROM caretaker_db.employee_schedule WHERE employees_emp_id "
+//            + "IN (SELECT emp_id FROM caretaker_db.employees where employees.emp_username='JohnDoe') AND sch_date='2016-12-18';")
     , @NamedQuery(name = "EmployeeSchedule.findByCustomerId", query = "SELECT e FROM EmployeeSchedule e WHERE e.customersCuId.cuId = :cuId")})
 public class EmployeeSchedule implements Serializable {
 
