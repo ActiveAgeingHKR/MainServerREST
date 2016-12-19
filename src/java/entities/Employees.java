@@ -44,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Employees.findByEmpEmail", query = "SELECT e FROM Employees e WHERE e.empEmail = :empEmail")
     , @NamedQuery(name = "Employees.findByEmpPhone", query = "SELECT e FROM Employees e WHERE e.empPhone = :empPhone")
     , @NamedQuery(name = "Employees.findByEmpRegistered", query = "SELECT e FROM Employees e WHERE e.empRegistered = :empRegistered")
+    , @NamedQuery(name = "Employees.findIdByEmpName", query = "SELECT e.empId FROM Employees e WHERE e.empUsername = :empUsername")   
     , @NamedQuery(name = "Employees.Login", query = "SELECT e FROM Employees e WHERE e.empUsername = :empUsername AND e.empPassword = :empPassword")})
 public class Employees implements Serializable {
 
