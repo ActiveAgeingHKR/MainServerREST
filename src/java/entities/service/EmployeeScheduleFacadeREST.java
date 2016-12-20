@@ -107,6 +107,15 @@ public class EmployeeScheduleFacadeREST extends AbstractFacade<EmployeeSchedule>
     public String countREST() {
         return String.valueOf(super.count());
     }
+    
+    @GET
+    @Path("/findschafterdate/{date}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<EmployeeSchedule> findSchAfterDate(@PathParam("schDate") String schDate) {
+        Query query = em.createNamedQuery("EmployeeSchedule.findSchAfterDate").setParameter("schDate", schDate);  
+        List<EmployeeSchedule> schedule = query.getResultList();
+        return schedule;
+    }
 
     @Override
     protected EntityManager getEntityManager() {
