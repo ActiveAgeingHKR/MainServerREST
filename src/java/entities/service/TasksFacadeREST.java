@@ -113,6 +113,16 @@ public class TasksFacadeREST extends AbstractFacade<Tasks> {
     public String countREST() {
         return String.valueOf(super.count());
     }
+    
+    @GET
+    @Path("/findtaskbyempid/{empid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Tasks> findTaskbyEmpId(@PathParam("empid") Integer empid) {
+        //return super.find(email);
+        Query query = em.createNamedQuery("Tasks.findTaskbyEmpId").setParameter("empId", empid);  
+        List<Tasks> tasks = query.getResultList();
+        return tasks;
+    }
 
     @Override
     protected EntityManager getEntityManager() {
