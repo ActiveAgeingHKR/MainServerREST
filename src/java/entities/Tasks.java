@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Tasks.findByTaskTitle", query = "SELECT t FROM Tasks t WHERE t.taskTitle = :taskTitle")
     , @NamedQuery(name = "Tasks.findByTaskContent", query = "SELECT t FROM Tasks t WHERE t.taskContent = :taskContent")
     , @NamedQuery(name = "Tasks.findByTaskdueDate", query = "SELECT t FROM Tasks t WHERE t.taskdueDate = :taskdueDate")
+    , @NamedQuery(name = "Tasks.findTaskbyEmpId", query = "SELECT t FROM Tasks t,Employees e, e.tasksCollection etc WHERE t.taskId = etc.taskId AND e.empId = :empId")    
     , @NamedQuery(name = "Tasks.findByTaskCompl", query = "SELECT t FROM Tasks t WHERE t.taskCompl = :taskCompl")})
 public class Tasks implements Serializable {
 
