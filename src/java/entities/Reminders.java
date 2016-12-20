@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Reminders.findAll", query = "SELECT r FROM Reminders r")
     , @NamedQuery(name = "Reminders.findByRemId", query = "SELECT r FROM Reminders r WHERE r.remId = :remId")
     , @NamedQuery(name = "Reminders.findByRemDate", query = "SELECT r FROM Reminders r WHERE r.remDate = :remDate")
+    , @NamedQuery(name = "Reminders.findRemindersByTaskId", query = "SELECT r FROM Reminders r,Tasks t , t.remindersCollection trc , r.tasksCollection rtc WHERE r.remId = trc.remId AND t.taskId = rtc.taskId AND t.taskId = :taskId")
     , @NamedQuery(name = "Reminders.findByRemTime", query = "SELECT r FROM Reminders r WHERE r.remTime = :remTime")})
 public class Reminders implements Serializable {
 
@@ -132,5 +133,5 @@ public class Reminders implements Serializable {
     public String toString() {
         return "entities.Reminders[ remId=" + remId + " ]";
     }
-    
+
 }
