@@ -118,11 +118,11 @@ public class EmployeesFacadeREST extends AbstractFacade<Employees> {
     @GET
     @Path("/idbyusername/{username}")
     @Produces({MediaType.TEXT_PLAIN})
-    public Integer findIdByEmpName(@PathParam("username") String username) {
+    public int findIdByEmpName(@PathParam("username") String username) {
         //return super.find(email);
         Query query = em.createNamedQuery("Employees.findIdByEmpName").setParameter("empUsername", username);  
         List<Employees> emps = query.getResultList();
-        return emps.get(0).getEmpId();
+        return emps.get(0).getEmpId().intValue();
     }
 
 
