@@ -104,4 +104,14 @@ public class RemindersFacadeREST extends AbstractFacade<Reminders> {
         return em;
     }
     
+    @GET
+    @Path("/findrembytaskid/{taskid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Reminders> findRemindersByTaskId(@PathParam("taskid") Integer taskid) {
+        //return super.find(email);
+        Query query = em.createNamedQuery("Reminders.findRemindersByTaskId").setParameter("taskId", taskid);  
+        List<Reminders> reminders = query.getResultList();
+        return reminders;
+    }
+    
 }
