@@ -92,15 +92,15 @@ public class EmployeeScheduleFacadeREST extends AbstractFacade<EmployeeSchedule>
     @Path("getempschedulebyempId/{empId}")
     @Produces({MediaType.TEXT_PLAIN})
     public String findByEmployeeIDString(@PathParam("empId") Integer empId) {
-        Query query = em.createNamedQuery("EmployeeSchedule.findByEmployeeId").setParameter("empId", empId);
+        Query query = em.createNamedQuery("EmployeeSchedule.findByEmployeeIdFalse").setParameter("empId", empId);
         List<String> schedule = new ArrayList<>();
         List<EmployeeSchedule> list = query.getResultList();
         for(int i=0; i<list.size(); i++){
-            schedule.add(list.get(i).getCustomersCuId().getCuId()+","+list.get(i).getCustomersCuId().getCuLastname()+","
-                    +list.get(i).getCustomersCuId().getCuFirstname()+","+list.get(i).getCustomersCuId().getCuAddress()+","
+            schedule.add(list.get(i).getCustomersCuId().getCuId()+";"+list.get(i).getCustomersCuId().getCuLastname()+";"
+                    +list.get(i).getCustomersCuId().getCuFirstname()+";"+list.get(i).getCustomersCuId().getCuAddress()+";"
                     +list.get(i).getSchDate()+
-                    ","+list.get(i).getSchFromTime()+","+list.get(i).getSchUntilTime()+","+
-                    list.get(i).getEmplVisitedCust()+"\n");
+                    ";"+list.get(i).getSchFromTime()+";"+list.get(i).getSchUntilTime()+";"+
+                    list.get(i).getEmplVisitedCust());
         }
         return schedule.toString();
     }
