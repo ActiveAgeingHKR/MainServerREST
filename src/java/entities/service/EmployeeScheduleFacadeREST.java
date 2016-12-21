@@ -6,6 +6,7 @@
 package entities.service;
 
 import entities.EmployeeSchedule;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -85,6 +86,23 @@ public class EmployeeScheduleFacadeREST extends AbstractFacade<EmployeeSchedule>
     public List<EmployeeSchedule> findByEmployeeID(@PathParam("empId") Integer empId) {
         Query query = em.createNamedQuery("EmployeeSchedule.findByEmployeeId").setParameter("empId", empId);
         return query.getResultList();
+    }
+    
+    @GET
+    @Path("getempschedulebyempId/{empId}")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String findByEmployeeIDString(@PathParam("empId") Integer empId) {
+        Query query = em.createNamedQuery("EmployeeSchedule.findByEmployeeId").setParameter("empId", empId);
+        List<String> schedule = new ArrayList<>();
+        List<EmployeeSchedule> list = query.getResultList();
+        for(int i=0; i<list.size(); i++){
+            schedule.add(list.get(i).getCustomersCuId().getCuId()+","+list.get(i).getCustomersCuId().getCuLastname()+","
+                    +list.get(i).getCustomersCuId().getCuFirstname()+","+list.get(i).getCustomersCuId().getCuAddress()+","
+                    +list.get(i).getSchDate()+
+                    ","+list.get(i).getSchFromTime()+","+list.get(i).getSchUntilTime()+","+
+                    list.get(i).getEmplVisitedCust()+"\n");
+        }
+        return schedule.toString();
     }
 
     @GET
