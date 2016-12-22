@@ -71,35 +71,39 @@ public class TasksFacadeREST extends AbstractFacade<Tasks> {
         return super.findAll();
     }
 //findByTaskTitle findByTaskContent findByTaskdueDate findByTaskCompl
-     @GET
+
+    @GET
     @Path("/title/{title}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List <Tasks> findByTaskTitle(@PathParam("title") String title) {
+    public List<Tasks> findByTaskTitle(@PathParam("title") String title) {
         Query query = em.createNamedQuery("Tasks.findByTaskTitle").setParameter("taskTitle", title);
         return query.getResultList();
     }
-       @GET
+
+    @GET
     @Path("/conten/{conten}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List <Tasks> findByTaskContent(@PathParam("conten") String conten) {
+    public List<Tasks> findByTaskContent(@PathParam("conten") String conten) {
         Query query = em.createNamedQuery("Tasks.findByTaskContent").setParameter("taskContent", conten);
         return query.getResultList();
     }
-         @GET
+
+    @GET
     @Path("/dueDate/{dueDate}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List <Tasks> findByTaskdueDate(@PathParam("dueDate") Date dueDate) {
+    public List<Tasks> findByTaskdueDate(@PathParam("dueDate") Date dueDate) {
         Query query = em.createNamedQuery("Tasks.findByTaskdueDate").setParameter("taskdueDate", dueDate);
         return query.getResultList();
     }
+
     @GET
     @Path("/compl/{compl}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List <Tasks> findByTaskCompl(@PathParam("compl") boolean compl) {
+    public List<Tasks> findByTaskCompl(@PathParam("compl") boolean compl) {
         Query query = em.createNamedQuery("Tasks.findByTaskCompl").setParameter("taskCompl", compl);
         return query.getResultList();
     }
-    
+
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -113,13 +117,13 @@ public class TasksFacadeREST extends AbstractFacade<Tasks> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-    
+
     @GET
     @Path("/findtaskbyempid/{empid}")
     @Produces({MediaType.APPLICATION_JSON})
     public List<Tasks> findTaskbyEmpId(@PathParam("empid") Integer empid) {
         //return super.find(email);
-        Query query = em.createNamedQuery("Tasks.findTaskbyEmpId").setParameter("empId", empid);  
+        Query query = em.createNamedQuery("Tasks.findTaskbyEmpId").setParameter("empId", empid);
         List<Tasks> tasks = query.getResultList();
         return tasks;
     }
@@ -128,6 +132,5 @@ public class TasksFacadeREST extends AbstractFacade<Tasks> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-}
 
+}

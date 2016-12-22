@@ -107,7 +107,7 @@ public class NotesFacadeREST extends AbstractFacade<Notes> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;

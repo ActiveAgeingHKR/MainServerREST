@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -14,9 +15,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -30,7 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Notes.findAll", query = "SELECT n FROM Notes n")
     , @NamedQuery(name = "Notes.findByNoteId", query = "SELECT n FROM Notes n WHERE n.notesPK.noteId = :noteId")
     , @NamedQuery(name = "Notes.findByEmployeesEmpId", query = "SELECT n FROM Notes n WHERE n.notesPK.employeesEmpId = :employeesEmpId")
-    , @NamedQuery(name = "Notes.findByNoteTitle", query = "SELECT n FROM Notes n WHERE n.noteTitle = :noteTitle")
+    , @NamedQuery(name = "Notes.findByNoteTitle", query = "SELECT n FROM Notes n WHERE n.noteTitle = :noteTitle")    
     , @NamedQuery(name = "Notes.findByContent", query = "SELECT n FROM Notes n WHERE n.content = :content")})
 public class Notes implements Serializable {
 
@@ -130,6 +137,8 @@ public class Notes implements Serializable {
         }
         return true;
     }
+    
+   
 
     @Override
     public String toString() {
