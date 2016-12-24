@@ -104,6 +104,23 @@ public class EmployeeScheduleFacadeREST extends AbstractFacade<EmployeeSchedule>
         }
         return schedule.toString();
     }
+    
+    @GET
+    @Path("getschedbyempiddate/{empId}&{schDate}")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String findByEmpIDByDate(@PathParam("empId") Integer empId, @PathParam("schDate") String schDate) {
+        Query query = em.createNamedQuery("EmployeeSchedule.findByEmpIdDaily").setParameter("empId", empId).setParameter("schDate", schDate);
+        List<String> schedule = new ArrayList<>();
+        List<EmployeeSchedule> list = query.getResultList();
+        for(int i=0; i<list.size(); i++){
+            schedule.add(list.get(i).getCustomersCuId().getCuId()+";"+list.get(i).getCustomersCuId().getCuLastname()+";"
+                    +list.get(i).getCustomersCuId().getCuFirstname()+";"+list.get(i).getCustomersCuId().getCuAddress()+";"
+                    +list.get(i).getSchDate()+
+                    ";"+list.get(i).getSchFromTime()+";"+list.get(i).getSchUntilTime()+";"+
+                    list.get(i).getEmplVisitedCust());
+        }
+        return schedule.toString();
+    }
 
     @GET
     @Override
