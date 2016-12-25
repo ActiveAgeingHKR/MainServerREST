@@ -96,7 +96,7 @@ public class EmployeeScheduleFacadeREST extends AbstractFacade<EmployeeSchedule>
         List<String> schedule = new ArrayList<>();
         List<EmployeeSchedule> list = query.getResultList();
         for(int i=0; i<list.size(); i++){
-            schedule.add(list.get(i).getCustomersCuId().getCuId()+";"+list.get(i).getCustomersCuId().getCuLastname()+";"
+            schedule.add(list.get(i).getSchId()+";"+list.get(i).getCustomersCuId().getCuId()+";"+list.get(i).getCustomersCuId().getCuLastname()+";"
                     +list.get(i).getCustomersCuId().getCuFirstname()+";"+list.get(i).getCustomersCuId().getCuAddress()+";"
                     +list.get(i).getSchDate()+
                     ";"+list.get(i).getSchFromTime()+";"+list.get(i).getSchUntilTime()+";"+
@@ -113,7 +113,24 @@ public class EmployeeScheduleFacadeREST extends AbstractFacade<EmployeeSchedule>
         List<String> schedule = new ArrayList<>();
         List<EmployeeSchedule> list = query.getResultList();
         for(int i=0; i<list.size(); i++){
-            schedule.add(list.get(i).getCustomersCuId().getCuId()+";"+list.get(i).getCustomersCuId().getCuLastname()+";"
+            schedule.add(list.get(i).getSchId()+";"+list.get(i).getCustomersCuId().getCuId()+";"+list.get(i).getCustomersCuId().getCuLastname()+";"
+                    +list.get(i).getCustomersCuId().getCuFirstname()+";"+list.get(i).getCustomersCuId().getCuAddress()+";"
+                    +list.get(i).getSchDate()+
+                    ";"+list.get(i).getSchFromTime()+";"+list.get(i).getSchUntilTime()+";"+
+                    list.get(i).getEmplVisitedCust());
+        }
+        return schedule.toString();
+    }
+    
+    @GET
+    @Path("getschidlargerthan/{schId}&{empId}")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String findBySchIdLargerThan(@PathParam("schId") Integer schId, @PathParam("empId") Integer empId) {
+        Query query = em.createNamedQuery("EmployeeSchedule.findBySchIdLargerThan").setParameter("schId", schId).setParameter("empId", empId);
+        List<String> schedule = new ArrayList<>();
+        List<EmployeeSchedule> list = query.getResultList();
+        for(int i=0; i<list.size(); i++){
+            schedule.add(list.get(i).getSchId()+";"+list.get(i).getCustomersCuId().getCuId()+";"+list.get(i).getCustomersCuId().getCuLastname()+";"
                     +list.get(i).getCustomersCuId().getCuFirstname()+";"+list.get(i).getCustomersCuId().getCuAddress()+";"
                     +list.get(i).getSchDate()+
                     ";"+list.get(i).getSchFromTime()+";"+list.get(i).getSchUntilTime()+";"+

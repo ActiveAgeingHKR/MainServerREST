@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "EmployeeSchedule.findByEmployeeIdFalse", query = "SELECT e FROM EmployeeSchedule e WHERE e.emplVisitedCust = false AND e.employeesEmpId.empId = :empId")
     , @NamedQuery(name = "EmployeeSchedule.findSchAfterDate", query = "SELECT e FROM EmployeeSchedule e WHERE e.schDate >= :schDate")
     , @NamedQuery(name = "EmployeeSchedule.findByEmpIdDaily", query = "SELECT e FROM EmployeeSchedule e WHERE e.schDate =:schDate AND e.employeesEmpId.empId = :empId")
+    , @NamedQuery(name = "EmployeeSchedule.findBySchIdLargerThan", query = "SELECT e FROM EmployeeSchedule e WHERE e.schId > :schId AND e.employeesEmpId.empId = :empId")    
     , @NamedQuery(name = "EmployeeSchedule.findByCustomerId", query = "SELECT e FROM EmployeeSchedule e WHERE e.customersCuId.cuId = :cuId")})
 public class EmployeeSchedule implements Serializable {
 
