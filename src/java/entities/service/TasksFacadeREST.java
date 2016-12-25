@@ -127,6 +127,26 @@ public class TasksFacadeREST extends AbstractFacade<Tasks> {
         List<Tasks> tasks = query.getResultList();
         return tasks;
     }
+    
+    @GET
+    @Path("/findactivetasksbyempid/{empid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Tasks> findActiveTaskbyEmpId(@PathParam("empid") Integer empid) {
+        //return super.find(email);
+        Query query = em.createNamedQuery("Tasks.findTaskbyEmpIdActive").setParameter("empId", empid);
+        List<Tasks> tasks = query.getResultList();
+        return tasks;
+    }
+    
+    @GET
+    @Path("/getupdatedtasklist/{empid}&{taskId}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Tasks> findUpdatedTaskList(@PathParam("empid") Integer empid,@PathParam("taskId") Integer taskId) {
+        //return super.find(email);
+        Query query = em.createNamedQuery("Tasks.getUpdatedTasksForEmp").setParameter("empId", empid).setParameter("taskId", taskId);
+        List<Tasks> tasks = query.getResultList();
+        return tasks;
+    }
 
     @Override
     protected EntityManager getEntityManager() {
