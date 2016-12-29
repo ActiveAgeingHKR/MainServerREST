@@ -50,13 +50,13 @@ public class Reminders implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "rem_date")
-    @Temporal(TemporalType.DATE)
-    private Date remDate;
+//    @Temporal(TemporalType.DATE)
+    private String remDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "rem_time")
-    @Temporal(TemporalType.DATE)
-    private Date remTime;
+//    @Temporal(TemporalType.DATE)
+    private String remTime;
     @JoinTable(name = "tasks_has_reminders", joinColumns = {
         @JoinColumn(name = "reminders_rem_id", referencedColumnName = "rem_id")}, inverseJoinColumns = {
         @JoinColumn(name = "tasks_task_id", referencedColumnName = "task_id")})
@@ -70,7 +70,7 @@ public class Reminders implements Serializable {
         this.remId = remId;
     }
 
-    public Reminders(Integer remId, Date remDate, Date remTime) {
+    public Reminders(Integer remId, String remDate, String remTime) {
         this.remId = remId;
         this.remDate = remDate;
         this.remTime = remTime;
@@ -84,19 +84,19 @@ public class Reminders implements Serializable {
         this.remId = remId;
     }
 
-    public Date getRemDate() {
+    public String getRemDate() {
         return remDate;
     }
 
-    public void setRemDate(Date remDate) {
+    public void setRemDate(String remDate) {
         this.remDate = remDate;
     }
 
-    public Date getRemTime() {
+    public String getRemTime() {
         return remTime;
     }
 
-    public void setRemTime(Date remTime) {
+    public void setRemTime(String remTime) {
         this.remTime = remTime;
     }
 

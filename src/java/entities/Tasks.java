@@ -7,7 +7,6 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +17,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -64,8 +61,8 @@ public class Tasks implements Serializable {
     @Column(name = "task_content")
     private String taskContent;
     @Column(name = "task_dueDate")
-    @Temporal(TemporalType.DATE)
-    private Date taskdueDate;
+//    @Temporal(TemporalType.DATE)
+    private String taskdueDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "task_compl")
@@ -111,11 +108,11 @@ public class Tasks implements Serializable {
         this.taskContent = taskContent;
     }
 
-    public Date getTaskdueDate() {
+    public String getTaskdueDate() {
         return taskdueDate;
     }
 
-    public void setTaskdueDate(Date taskdueDate) {
+    public void setTaskdueDate(String taskdueDate) {
         this.taskdueDate = taskdueDate;
     }
 
