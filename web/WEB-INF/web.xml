@@ -10,15 +10,7 @@
         </session-timeout>
     </session-config>
     
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Viewpoint Secure URLs</web-resource-name>
-            <url-pattern>/*</url-pattern>
-        </web-resource-collection>
-        <user-data-constraint>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
+
    
    
    
@@ -44,6 +36,9 @@
         <auth-constraint>
             <role-name>EMPLOYEE</role-name>
         </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
     </security-constraint>
     
     <security-constraint>
@@ -65,6 +60,9 @@
         <auth-constraint>
             <role-name>ADMIN</role-name>
         </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
     </security-constraint>
 
     <login-config>
