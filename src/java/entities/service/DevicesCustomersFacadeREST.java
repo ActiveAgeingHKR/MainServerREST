@@ -67,12 +67,12 @@ public class DevicesCustomersFacadeREST extends AbstractFacade<DevicesCustomers>
     
     @GET
     @Path("/id/{id}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response getCuIdFromDevId(@PathParam("id") String id) {
+    @Produces({MediaType.TEXT_PLAIN})
+    public String getCuIdFromDevId(@PathParam("id") String id) {
         //return just the customer ID related to this device ID
         DevicesCustomers devCust = super.find(id);
         int cuId = devCust.getCustomersCuId().getCuId();
-        return Response.status(200).entity(cuId).build();
+        return String.valueOf(cuId);
         
     }
 
