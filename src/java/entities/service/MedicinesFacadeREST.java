@@ -50,6 +50,8 @@ public class MedicinesFacadeREST extends AbstractFacade<Medicines> {
     public void edit(@PathParam("id") Integer id, Medicines entity) {
         super.edit(entity);
     }
+    
+    
 
     @DELETE
     @Path("{id}")

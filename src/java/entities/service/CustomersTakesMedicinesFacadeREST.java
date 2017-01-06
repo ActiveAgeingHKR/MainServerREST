@@ -67,13 +67,29 @@ public class CustomersTakesMedicinesFacadeREST extends AbstractFacade<CustomersT
     public void create(CustomersTakesMedicines entity) {
         super.create(entity);
     }
+    
+    @PUT
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void edit(CustomersTakesMedicines entity) {
+        super.edit(entity);
+    }
+    
 
     @PUT
     @Path("{id}")
-    @Consumes({ MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") PathSegment id, CustomersTakesMedicines entity) {
         super.edit(entity);
     }
+
+    @PUT
+    @Path("{custId}/{medId}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void editCustMed(@PathParam("custId") Integer custId, @PathParam("medId") Integer medId, CustomersTakesMedicines entity) {
+        super.edit(entity);
+    }
+
+
 
     @DELETE
     @Path("{id}")
