@@ -51,6 +51,11 @@ public class MedicinesFacadeREST extends AbstractFacade<Medicines> {
         super.edit(entity);
     }
     
+    @PUT
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void edit(Medicines entity) {
+        super.edit(entity);
+    }
     
 
     @DELETE
